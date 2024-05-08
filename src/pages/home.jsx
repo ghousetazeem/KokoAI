@@ -14,7 +14,9 @@ import { FingerPrintIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { PageTitle, Footer } from "@/widgets/layout";
 import { FeatureCard, TeamCard } from "@/widgets/cards";
 import { featuresData, teamData, contactData } from "@/data";
-
+import 'bootstrap/dist/css/bootstrap.css';
+// Put any other imports below so that CSS from your
+// components takes precedence over default styles.
 export function Home() {
   const handleGetStarted = () => {
     const contactUs = document.getElementById("contactus")
@@ -175,6 +177,100 @@ export function Home() {
 
               </div>
             </section>
+            <section id="pricing" class="bg-white">
+        <div class="container">
+            <h2 class="text-center">PRICING</h2>
+            <div class="spacer spacer-line border-primary">&nbsp;</div>
+            <div class="spacer">&nbsp;</div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="pricing-table">
+                        <div class="pricing-table-title">
+                            <h5 class="pricing-title bg-info-hover text-white">STARTER</h5>
+                        </div>
+                        <div class="pricing-table-price text-center bg-info">
+                            <p class="title-font">
+                                <span class="pricing-period text-white mr-1">From</span>
+                                <span class="pricing-currency text-white">$</span>
+                                <span class="pricing-price text-white">9.99</span>
+                                <span class="pricing-period text-white">/ Mo.</span>
+                            </p>
+                        </div>
+                        <div class="pricing-table-content">
+                            <ul>
+                                <li><strong>Basic Package</strong></li>
+                                <li><strong>1 Intermediate</strong></li>
+                                <li><strong>Business Start</strong></li>
+                                <li><strong><del>Professional Features</del></strong></li>
+                                <li><strong><del>Extra Options</del></strong></li>
+                                <li><strong>24/7 Support</strong></li>
+                            </ul>
+                            <div class="pricing-table-button">
+                                <a href="#x" class="btn btn-info"><span>Request Quote</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               <div class="col-md-4">
+                    <div class="pricing-table bg-lightgrey">
+                        <div class="pricing-table-title">
+                            <h5 class="pricing-title bg-primary-hover text-white">BUSINESS</h5>
+                        </div>
+                        <div class="pricing-table-price text-center bg-primary">
+                            <p class="title-font">
+                                <span class="pricing-period text-white mr-1">From</span>
+                                <span class="pricing-currency text-white">$</span>
+                                <span class="pricing-price text-white">29.99</span>
+                                <span class="pricing-period text-white">/ Mo.</span>
+                            </p>
+                        </div>
+                        <div class="pricing-table-content">
+                            <ul>
+                                <li><strong>Management Package</strong></li>
+                                <li><strong>1 Professional</strong></li>
+                                <li><strong>Business Professional</strong></li>
+                                <li><strong>Professional Features</strong></li>
+                                <li><strong><del>Extra Options</del></strong></li>
+                                <li><strong>24/7 Support</strong></li>
+                            </ul>
+                          
+                                <a href="#x" class="btn btn-primary"><span>Request Quote</span></a>
+            
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-md-4">
+                    <div class="pricing-table">
+                        <div class="pricing-table-title">
+                            <h5 class="pricing-title bg-info-hover text-white">ENTERPRISE</h5>
+                        </div>
+                        <div class="pricing-table-price text-center bg-info">
+                            <p class="title-font">
+                                <span class="pricing-period text-white mr-1">From</span>
+                                <span class="pricing-currency text-white">$</span>
+                                <span class="pricing-price text-white">49.99</span>
+                                <span class="pricing-period text-white">/ Mo.</span>
+                            </p>
+                        </div>
+                        <div class="pricing-table-content">
+                            <ul>
+                                <li><strong>Business Package</strong></li>
+                                <li><strong>Up to 4 Professionals</strong></li>
+                                <li><strong>Enterprise Professional</strong></li>
+                                <li><strong>Professional Features</strong></li>
+                                <li><strong>Extra Options</strong></li>
+                                <li><strong>24/7 Support</strong></li>
+                            </ul>
+                            <div class="pricing-table-button">
+                                <a href="#x" class="btn btn-info"><span>Request Quote</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
           </div>
           <div id="contactus">
             <PageTitle section="Contact Us" heading="Want to work with us?" >
@@ -211,6 +307,7 @@ export function Home() {
           </form>
         </div>
       </section>
+     
       <div className="bg-white">
         <Footer />
       </div>
