@@ -18,11 +18,75 @@ export function Navbar({ brandName, routes, action }) {
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
+
+    // Remove the event listener when component unmounts
+    return () => {
+      window.removeEventListener(
+        "resize",
+        () => window.innerWidth >= 960 && setOpenNav(false)
+      );
+    };
   }, []);
+
+  const handleClickAboutUs = () => {
+    const aboutUsSection = document.getElementById("aboutus");
+    if (aboutUsSection) {
+      const navbarHeight = document.querySelector(".mt-navbar").offsetHeight;
+      const targetScroll = aboutUsSection.offsetTop - navbarHeight;
+      window.scrollTo({
+        top: targetScroll,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleClickServices = () => {
+    const servicesSection = document.getElementById("services");
+    if (servicesSection) {
+      const navbarHeight = document.querySelector(".mt-navbar").offsetHeight;
+      const targetScroll = servicesSection.offsetTop - navbarHeight;
+      window.scrollTo({
+        top: targetScroll,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleClickPlans = () => {
+    const plansSection = document.getElementById("plans");
+    if (plansSection) {
+      const navbarHeight = document.querySelector(".mt-navbar").offsetHeight;
+      const targetScroll = plansSection.offsetTop - navbarHeight;
+      window.scrollTo({
+        top: targetScroll,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleClickContactUs = () => {
+    const contactUsSection = document.getElementById("contactus");
+    if (contactUsSection) {
+      const navbarHeight = document.querySelector(".mt-navbar").offsetHeight;
+      const targetScroll = contactUsSection.offsetTop - navbarHeight;
+      window.scrollTo({
+        top: targetScroll,
+        behavior: "smooth",
+      });
+    }
+  };
+
+
+
+
+
+
+
+  const filteredRoutes = routes.filter(route => route.name); // Filter out routes with no name
 
   const navList = (
     <ul className="mb-4 mt-2 flex flex-col gap-2 text-inherit lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      {routes.map(({ name, path, icon, href, target }) => (
+      {filteredRoutes.map(({ name, path, icon, href, target }) => (
         <Typography
           key={name}
           as="li"
@@ -61,21 +125,47 @@ export function Navbar({ brandName, routes, action }) {
   );
 
   return (
-    <MTNavbar color="transparent" className="p-3">
+    <MTNavbar color="transparent" className="mt-navbar p-3 pb-0">
       <div className="container mx-auto flex items-center justify-between text-white">
         <Link to="/">
           <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-bold">
-            {brandName}
+            <span className="text-red-900"> {brandName}
+            </span> AI
           </Typography>
         </Link>
-        <div className="hidden lg:block">{navList}</div>
+
         <div className="hidden gap-2 lg:flex">
+          <div className="hidden lg:block">{navList}</div>
           <a
-            href="https://www.material-tailwind.com/blocks?ref=mtkr"
-            target="_blank"
+            href="#services"
+            onClick={handleClickServices}
           >
-            <Button variant="text" size="sm" color="white" fullWidth>
-              pro version
+            <Button variant="text" size="sm" color="white" fullWidth className="hover:bg-transparent">
+              Services
+            </Button>
+          </a>
+          <a
+            href="#aboutus"
+            onClick={handleClickAboutUs}
+          >
+            <Button variant="text" size="sm" color="white" fullWidth className="hover:bg-transparent">
+              About Us
+            </Button>
+          </a>
+          <a
+            href="#plans"
+            onClick={handleClickPlans}
+          >
+            <Button variant="text" size="sm" color="white" fullWidth className="hover:bg-transparent">
+              Plans
+            </Button>
+          </a>
+          <a
+            href="#contactus"
+            onClick={handleClickContactUs}
+          >
+            <Button variant="text" size="sm" color="white" fullWidth className="hover:bg-transparent">
+              Contact Us
             </Button>
           </a>
           {React.cloneElement(action, {
@@ -97,38 +187,65 @@ export function Navbar({ brandName, routes, action }) {
         </IconButton>
       </div>
       <MobileNav
-        className="rounded-xl bg-white px-4 pt-2 pb-4 text-blue-gray-900"
+        className="rounded-xl bg-white px-4 pt-2 text-blue-gray-900"
         open={openNav}
+        style={{ paddingBottom: "0.6rem" }}
       >
         <div className="container mx-auto">
-          {navList}
-          <a
-            href="https://www.material-tailwind.com/blocks/react?ref=mtkr"
-            target="_blank"
-            className="mb-2 block"
-          >
-            <Button variant="text" size="sm" fullWidth>
-              pro version
-            </Button>
-          </a>
+          <div className="flex align-middle items-center" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            {navList}
+          </div>
+          <div className="container">
+            <a
+              href="#services"
+              onClick={handleClickServices}
+            >
+              <Button variant="text" size="sm" fullWidth className="hover:bg-transparent">
+                Services
+              </Button>
+            </a>
+            <a
+              href="#aboutus"
+              onClick={handleClickAboutUs}
+            >
+              <Button variant="text" size="sm" fullWidth className="hover:bg-transparent">
+                About Us
+              </Button>
+            </a>
+            <a
+              href="#plans"
+              onClick={handleClickPlans}
+            >
+              <Button variant="text" size="sm" fullWidth className="hover:bg-transparent">
+                Plans
+              </Button>
+            </a>
+            <a
+              href="#contactus"
+              onClick={handleClickContactUs}
+            >
+              <Button variant="text" size="sm" fullWidth className="hover:bg-transparent">
+                Contact Us
+              </Button>
+            </a>
+          </div>
           {React.cloneElement(action, {
             className: "w-full block",
           })}
         </div>
       </MobileNav>
-    </MTNavbar>
+    </MTNavbar >
   );
 }
 
 Navbar.defaultProps = {
-  brandName: "Material Tailwind React",
+  brandName: "KOKO",
   action: (
     <a
-      href="https://www.creative-tim.com/product/material-tailwind-kit-react"
-      target="_blank"
+      href="/sign-in"
     >
       <Button variant="gradient" size="sm" fullWidth>
-        free download
+        Sign In / Sign Up
       </Button>
     </a>
   ),

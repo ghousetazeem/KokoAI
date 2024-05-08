@@ -16,10 +16,14 @@ import { FeatureCard, TeamCard } from "@/widgets/cards";
 import { featuresData, teamData, contactData } from "@/data";
 
 export function Home() {
+  const handleGetStarted = () => {
+    const contactUs = document.getElementById("contactus")
+    contactUs.scrollIntoView({ behavior: "smooth" });
+  }
   return (
     <>
       <div className="relative flex h-screen content-center items-center justify-center pt-16 pb-32">
-        <div className="absolute top-0 h-full w-full bg-[url('/img/background-3.png')] bg-cover bg-center" />
+        <div className="absolute top-0 h-full w-full bg-[url('/img/bg.jpg')] bg-cover bg-center" />
         <div className="absolute top-0 h-full w-full bg-black/60 bg-cover bg-center" />
         <div className="max-w-8xl container relative mx-auto">
           <div className="flex flex-wrap items-center">
@@ -27,88 +31,21 @@ export function Home() {
               <Typography
                 variant="h1"
                 color="white"
-                className="mb-6 font-black"
+                className="mb-6 font-black mt-12"
               >
-                Your story starts with us.
+                Experience the Future AI Receptionist With <span className="text-red-900"> KOKO
+                </span>  AI
               </Typography>
-              <Typography variant="lead" color="white" className="opacity-80">
-                This is a simple example of a Landing Page you can build using
-                Material Tailwind. It features multiple components based on the
-                Tailwind CSS and Material Design by Google.
+              <Typography variant="lead" color="white" className="opacity-80 mt-0">
+                Boost your front desk with our AI Receptionist for better customer service and smoother operations.
               </Typography>
+              <button onClick={handleGetStarted} variant="gradient" size="sm" fullWidth className="p-4 text-white bg-red-900 mt-6 rounded-sm pt-2 pb-2">Get Started</button>
             </div>
           </div>
         </div>
       </div>
-      <section className="-mt-32 bg-white px-4 pb-20 pt-4">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {featuresData.map(({ color, title, icon, description }) => (
-              <FeatureCard
-                key={title}
-                color={color}
-                title={title}
-                icon={React.createElement(icon, {
-                  className: "w-5 h-5 text-white",
-                })}
-                description={description}
-              />
-            ))}
-          </div>
-          <div className="mt-32 flex flex-wrap items-center">
-            <div className="mx-auto -mt-8 w-full px-4 md:w-5/12">
-              <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-blue-gray-900 p-2 text-center shadow-lg">
-                <FingerPrintIcon className="h-8 w-8 text-white " />
-              </div>
-              <Typography
-                variant="h3"
-                className="mb-3 font-bold"
-                color="blue-gray"
-              >
-                Working with us is a pleasure
-              </Typography>
-              <Typography className="mb-8 font-normal text-blue-gray-500">
-                Don't let your uses guess by attaching tooltips and popoves to
-                any element. Just make sure you enable them first via
-                JavaScript.
-                <br />
-                <br />
-                The kit comes with three pre-built pages to help you get started
-                faster. You can change the text and images and you're good to
-                go. Just make sure you enable them first via JavaScript.
-              </Typography>
-              <Button variant="filled">read more</Button>
-            </div>
-            <div className="mx-auto mt-24 flex w-full justify-center px-4 md:w-4/12 lg:mt-0">
-              <Card className="shadow-lg border shadow-gray-500/10 rounded-lg">
-                <CardHeader floated={false} className="relative h-56">
-                  <img
-                    alt="Card Image"
-                    src="/img/teamwork.png"
-                    className="h-full w-full"
-                  />
-                </CardHeader>
-                <CardBody>
-                  <Typography variant="small" color="blue-gray" className="font-normal">Enterprise</Typography>
-                  <Typography
-                    variant="h5"
-                    color="blue-gray"
-                    className="mb-3 mt-2 font-bold"
-                  >
-                    Top Notch Services
-                  </Typography>
-                  <Typography className="font-normal text-blue-gray-500">
-                    The Arctic Ocean freezes every winter and much of the
-                    sea-ice then thaws every summer, and that process will
-                    continue whatever happens.
-                  </Typography>
-                </CardBody>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="px-4 pt-20 pb-48">
+
+      {/* <section className="px-4 pt-20 pb-48">
         <div className="container mx-auto">
           <PageTitle section="Our Team" heading="Here are our heroes">
             According to the National Oceanic and Atmospheric Administration,
@@ -135,13 +72,10 @@ export function Home() {
             ))}
           </div>
         </div>
-      </section>
-      <section className="relative bg-white py-24 px-4">
+      </section> */}
+      <section id="services" className="relative bg-white py-24 px-4">
         <div className="container mx-auto">
-          <PageTitle section="Co-Working" heading="Build something">
-            Put the potentially record low maximum sea ice extent tihs year down
-            to low ice. According to the National Oceanic and Atmospheric
-            Administration, Ted, Scambos.
+          <PageTitle section="Build With AI" heading="Services we provide">
           </PageTitle>
           <div className="mx-auto mt-20 mb-48 grid max-w-5xl grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-3">
             {contactData.map(({ title, icon, description }) => (
@@ -165,9 +99,88 @@ export function Home() {
               </Card>
             ))}
           </div>
-          <PageTitle section="Contact Us" heading="Want to work with us?">
-            Complete this form and we will get back to you in 24 hours.
-          </PageTitle>
+          <div>
+
+            <section id="aboutus" className="-mt-32 bg-white px-4 pb-20 pt-4">
+              <div className="mt-32 mb-32 flex flex-wrap items-center">
+                <div className="mx-auto -mt-8 w-full px-4 md:w-5/12">
+                  <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-blue-gray-900 p-2 text-center shadow-lg">
+                    <FingerPrintIcon className="h-8 w-8 text-white " />
+                  </div>
+                  <Typography
+                    variant="h3"
+                    className="mb-3 font-bold"
+                    color="blue-gray"
+                  >
+                    Working with us is a pleasure
+                  </Typography>
+                  <Typography className="mb-8 font-normal text-blue-gray-500">
+                    Don't let your uses guess by attaching tooltips and popoves to
+                    any element. Just make sure you enable them first via
+                    JavaScript.
+                    <br />
+                    <br />
+                    The kit comes with three pre-built pages to help you get started
+                    faster. You can change the text and images and you're good to
+                    go. Just make sure you enable them first via JavaScript.
+                  </Typography>
+                  <Button variant="filled">read more</Button>
+                </div>
+                <div className="mx-auto mt-24 flex w-full justify-center px-4 md:w-4/12 lg:mt-0">
+                  <Card className="shadow-lg border shadow-gray-500/10 rounded-lg">
+                    <CardHeader floated={false} className="relative h-56">
+                      <img
+                        alt="Card Image"
+                        src="/img/teamwork.png"
+                        className="h-full w-full"
+                      />
+                    </CardHeader>
+                    <CardBody>
+                      <Typography variant="small" color="blue-gray" className="font-normal">Enterprise</Typography>
+                      <Typography
+                        variant="h5"
+                        color="blue-gray"
+                        className="mb-3 mt-2 font-bold"
+                      >
+                        Top Notch Services
+                      </Typography>
+                      <Typography className="font-normal text-blue-gray-500">
+                        The Arctic Ocean freezes every winter and much of the
+                        sea-ice then thaws every summer, and that process will
+                        continue whatever happens.
+                      </Typography>
+                    </CardBody>
+                  </Card>
+                </div>
+              </div>
+              <div className="container mx-auto mb-32" id="plans">
+                <PageTitle heading="KOKO AI Plans" className="mt-32">
+                  According to the National Oceanic and Atmospheric Administration,
+                  Ted, Scambos, NSIDClead scentist, puts the potentially record
+                  maximum.
+                </PageTitle>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {featuresData.map(({ color, title, icon, description }) => (
+                    <FeatureCard
+                      key={title}
+                      color={color}
+                      title={title}
+                      icon={React.createElement(icon, {
+                        className: "w-5 h-5 text-white",
+                      })}
+                      description={description}
+                    />
+                  ))}
+                </div>
+
+              </div>
+            </section>
+          </div>
+          <div id="contactus">
+            <PageTitle section="Contact Us" heading="Want to work with us?" >
+              Complete this form and we will get back to you in 24 hours.
+            </PageTitle>
+          </div>
           <form className="mx-auto w-full mt-12 lg:w-5/12">
             <div className="mb-8 flex gap-8">
               <Input variant="outlined" size="lg" label="Full Name" />
