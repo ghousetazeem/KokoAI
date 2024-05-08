@@ -1,4 +1,5 @@
 import { Home, Profile, SignIn, SignUp } from "@/pages";
+import Dashboard from "./pages/dashboard";
 
 export const routes = [
   {
@@ -13,6 +14,10 @@ export const routes = [
   {
     path: "/sign-up",
     element: <SignUp />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
   },
   // {
   //   name: "profile",

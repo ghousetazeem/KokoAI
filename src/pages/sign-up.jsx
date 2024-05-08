@@ -5,12 +5,82 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import React, { useState } from "react";
+import { auth, db } from "../auth/firebase";
+import { setDoc, doc } from "firebase/firestore";
+import { toast } from "react-toastify";
+import { GoogleAuthProvider, signInWithRedirect } from 'firebase/auth'
 
 
 export function SignUp() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      const user = auth.currentUser;
+      console.log(user);
+      if (user) {
+        await setDoc(doc(db, "Users", user.uid), {
+          email: user.email,
+          photo: ""
+        });
+      }
+      console.log("User Registered Successfully!!");
+      toast.success("User Registered Successfully!!", {
+        position: "top-center",
+      });
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message, {
+        position: "bottom-center",
+      });
+    }
+  };
+
+  function googleLogin() {
+    // const auth = getAuth();
+     const provider = new GoogleAuthProvider();
+   
+    signInWithPopup(auth, provider)
+      .then(async (result) => {
+        console.log(result);
+        const user = result.user;
+        if (result.user) {
+          try {
+            await setDoc(doc(db, "Users", user.uid), {
+              email: user.email,
+              firstName: user.displayName,
+              photo: user.photoURL,
+            });
+            toast.success("User logged in Successfully", {
+              position: "top-center",
+            });
+            window.location.href = "/dashboard";
+          } catch (error) {
+            console.error("Error writing user data to Firestore:", error);
+            toast.error("Error logging in. Please try again later.");
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Error signing in with Google:", error);
+        toast.error("Error signing in with Google. Please try again later.");
+      });
+  }
+
+
+  const googleSignIn = () => {
+    const provider = new GoogleAuthProvider()
+    signInWithRedirect(auth, provider)
+    window.location.href = "/dashboard";
+  }
+
   return (
     <section className="m-8 flex">
-            <div className="w-2/5 h-full hidden lg:block">
+      <div className="w-2/5 h-full hidden lg:block">
         <img
           src="/img/pattern.png"
           className="h-full w-full object-cover rounded-3xl"
@@ -21,7 +91,7 @@ export function SignUp() {
           <Typography variant="h2" className="font-bold mb-4">Join Us Today</Typography>
           <Typography variant="paragraph" color="blue-gray" className="text-lg font-normal">Enter your email and password to register.</Typography>
         </div>
-        <form className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2">
+        <form onSubmit={handleRegister} className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2">
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Your email
@@ -33,6 +103,8 @@ export function SignUp() {
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Password
@@ -45,6 +117,8 @@ export function SignUp() {
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
           {/* <Checkbox
@@ -65,12 +139,12 @@ export function SignUp() {
             }
             containerProps={{ className: "-ml-2.5" }}
           /> */}
-          <Button className="mt-6" fullWidth>
+          <Button type="submit" className="mt-6" fullWidth>
             Register Now
           </Button>
 
           <div className="space-y-4 mt-8">
-            <Button size="lg" color="white" className="flex items-center gap-2 justify-center shadow-md" fullWidth>
+            <Button onClick={googleLogin} size="lg" color="white" className="flex items-center gap-2 justify-center shadow-md" fullWidth>
               <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clipPath="url(#clip0_1156_824)">
                   <path d="M16.3442 8.18429C16.3442 7.64047 16.3001 7.09371 16.206 6.55872H8.66016V9.63937H12.9813C12.802 10.6329 12.2258 11.5119 11.3822 12.0704V14.0693H13.9602C15.4741 12.6759 16.3442 10.6182 16.3442 8.18429Z" fill="#4285F4" />

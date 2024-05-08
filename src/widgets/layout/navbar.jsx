@@ -1,86 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import {
-  Navbar as MTNavbar,
-  MobileNav,
-  Typography,
-  Button,
-  IconButton,
-} from "@material-tailwind/react";
+import { Link, useLocation } from "react-router-dom";
+import { Navbar as MTNavbar, MobileNav, Typography, Button, IconButton } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { auth } from "../../auth/firebase";
 
 export function Navbar({ brandName, routes, action }) {
-  const [openNav, setOpenNav] = React.useState(false);
+  const [openNav, setOpenNav] = useState(false);
+  const [user, setUser] = useState(null);
+  const location = useLocation(); // Get the current location
 
-  React.useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false)
-    );
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
 
-    // Remove the event listener when component unmounts
     return () => {
-      window.removeEventListener(
-        "resize",
-        () => window.innerWidth >= 960 && setOpenNav(false)
-      );
+      unsubscribe();
     };
   }, []);
 
-  const handleClickAboutUs = () => {
-    const aboutUsSection = document.getElementById("aboutus");
-    if (aboutUsSection) {
-      const navbarHeight = document.querySelector(".mt-navbar").offsetHeight;
-      const targetScroll = aboutUsSection.offsetTop - navbarHeight;
-      window.scrollTo({
-        top: targetScroll,
-        behavior: "smooth",
-      });
+  const handleSignOut = async () => {
+    try {
+      await auth.signOut();
+      window.location.href = "/sign-in"; // Redirect to sign-in page after sign-out
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const handleClickServices = () => {
-    const servicesSection = document.getElementById("services");
-    if (servicesSection) {
-      const navbarHeight = document.querySelector(".mt-navbar").offsetHeight;
-      const targetScroll = servicesSection.offsetTop - navbarHeight;
-      window.scrollTo({
-        top: targetScroll,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const handleClickPlans = () => {
-    const plansSection = document.getElementById("plans");
-    if (plansSection) {
-      const navbarHeight = document.querySelector(".mt-navbar").offsetHeight;
-      const targetScroll = plansSection.offsetTop - navbarHeight;
-      window.scrollTo({
-        top: targetScroll,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const handleClickContactUs = () => {
-    const contactUsSection = document.getElementById("contactus");
-    if (contactUsSection) {
-      const navbarHeight = document.querySelector(".mt-navbar").offsetHeight;
-      const targetScroll = contactUsSection.offsetTop - navbarHeight;
-      window.scrollTo({
-        top: targetScroll,
-        behavior: "smooth",
-      });
-    }
-  };
-
-
-
-
-
-
+  const navAction = user ? (
+    <Link to="/dashboard">
+      <Button variant="gradient" size="sm" fullWidth>
+        Dashboard
+      </Button>
+    </Link>
+  ) : (
+    <Link to="/sign-in">
+      <Button variant="gradient" size="sm" fullWidth>
+        Sign In / Sign Up
+      </Button>
+    </Link>
+  );
 
   const filteredRoutes = routes.filter(route => route.name); // Filter out routes with no name
 
@@ -124,50 +85,89 @@ export function Navbar({ brandName, routes, action }) {
     </ul>
   );
 
+  const handleClickAboutUs = () => {
+    const aboutUsSection = document.getElementById("aboutus");
+    if (aboutUsSection) {
+      aboutUsSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  const handleClickServices = () => {
+    const servicesSection = document.getElementById("services");
+    if (servicesSection) {
+      const navbarHeight = document.querySelector(".mt-navbar").offsetHeight;
+      // Scroll to the section with additional padding for the navigation bar
+      window.scrollTo({
+        top: servicesSection.offsetTop - navbarHeight,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleClickPlans = () => {
+    const plansSection = document.getElementById("plans");
+    if (plansSection) {
+      plansSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  const handleClickContactUs = () => {
+    const contactUsSection = document.getElementById("contactus");
+    if (contactUsSection) {
+      contactUsSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <MTNavbar color="transparent" className="mt-navbar p-3 pb-0">
       <div className="container mx-auto flex items-center justify-between text-white">
         <Link to="/">
           <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-bold">
-            <span className="text-red-900"> {brandName}
-            </span> AI
+            <span className="text-red-900"> {brandName}</span> AI
           </Typography>
         </Link>
 
         <div className="hidden gap-2 lg:flex">
           <div className="hidden lg:block">{navList}</div>
-          <a
-            href="#services"
-            onClick={handleClickServices}
-          >
-            <Button variant="text" size="sm" color="white" fullWidth className="hover:bg-transparent">
-              Services
-            </Button>
-          </a>
-          <a
-            href="#aboutus"
-            onClick={handleClickAboutUs}
-          >
-            <Button variant="text" size="sm" color="white" fullWidth className="hover:bg-transparent">
-              About Us
-            </Button>
-          </a>
-          <a
-            href="#plans"
-            onClick={handleClickPlans}
-          >
-            <Button variant="text" size="sm" color="white" fullWidth className="hover:bg-transparent">
-              Plans
-            </Button>
-          </a>
-          <a
-            href="#contactus"
-            onClick={handleClickContactUs}
-          >
-            <Button variant="text" size="sm" color="white" fullWidth className="hover:bg-transparent">
-              Contact Us
-            </Button>
-          </a>
+
+          {location.pathname !== "/dashboard" && (
+            <a
+              href="#services"
+              onClick={handleClickServices}
+            >
+              <Button variant="text" size="sm" color="white" fullWidth className="hover:bg-transparent">
+                Services
+              </Button>
+            </a>
+          )}
+          {location.pathname !== "/dashboard" && (
+            <a
+              href="#aboutus"
+              onClick={handleClickAboutUs}
+            >
+              <Button variant="text" size="sm" color="white" fullWidth className="hover:bg-transparent">
+                About Us
+              </Button>
+            </a>
+          )}
+          {location.pathname !== "/dashboard" && (
+            <a
+              href="#plans"
+              onClick={handleClickPlans}
+            >
+              <Button variant="text" size="sm" color="white" fullWidth className="hover:bg-transparent">
+                Plans
+              </Button>
+            </a>
+          )}
+          {location.pathname !== "/dashboard" && (
+            <a
+              href="#contactus"
+              onClick={handleClickContactUs}
+            >
+              <Button variant="text" size="sm" color="white" fullWidth className="hover:bg-transparent">
+                Contact Us
+              </Button>
+            </a>
+          )}
+          {navAction}
           {React.cloneElement(action, {
             className: "hidden lg:inline-block",
           })}
@@ -195,39 +195,49 @@ export function Navbar({ brandName, routes, action }) {
           <div className="flex align-middle items-center" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             {navList}
           </div>
+
           <div className="container">
-            <a
-              href="#services"
-              onClick={handleClickServices}
-            >
-              <Button variant="text" size="sm" fullWidth className="hover:bg-transparent">
-                Services
-              </Button>
-            </a>
-            <a
-              href="#aboutus"
-              onClick={handleClickAboutUs}
-            >
-              <Button variant="text" size="sm" fullWidth className="hover:bg-transparent">
-                About Us
-              </Button>
-            </a>
-            <a
-              href="#plans"
-              onClick={handleClickPlans}
-            >
-              <Button variant="text" size="sm" fullWidth className="hover:bg-transparent">
-                Plans
-              </Button>
-            </a>
-            <a
-              href="#contactus"
-              onClick={handleClickContactUs}
-            >
-              <Button variant="text" size="sm" fullWidth className="hover:bg-transparent">
-                Contact Us
-              </Button>
-            </a>
+            {location.pathname !== "/dashboard" && (
+              <a
+                href="#services"
+                onClick={handleClickServices}
+              >
+                <Button variant="text" size="sm" fullWidth className="hover:bg-transparent">
+                  Services
+                </Button>
+              </a>
+            )}
+            {location.pathname !== "/dashboard" && (
+              <a
+                href="#aboutus"
+                onClick={handleClickAboutUs}
+              >
+                <Button variant="text" size="sm" fullWidth className="hover:bg-transparent">
+                  About Us
+                </Button>
+              </a>
+            )}
+            {location.pathname !== "/dashboard" && (
+              <a
+                href="#plans"
+                onClick={handleClickPlans}
+              >
+                <Button variant="text" size="sm" fullWidth className="hover:bg-transparent">
+                  Plans
+                </Button>
+              </a>
+            )}
+            {location.pathname !== "/dashboard" && (
+              <a
+                href="#contactus"
+                onClick={handleClickContactUs}
+              >
+                <Button variant="text" size="sm" fullWidth className="hover:bg-transparent">
+                  Contact Us
+                </Button>
+              </a>
+            )}
+            {navAction}
           </div>
           {React.cloneElement(action, {
             className: "w-full block",
@@ -241,13 +251,11 @@ export function Navbar({ brandName, routes, action }) {
 Navbar.defaultProps = {
   brandName: "KOKO",
   action: (
-    <a
-      href="/sign-in"
-    >
-      <Button variant="gradient" size="sm" fullWidth>
+    <Link to="/sign-in">
+      {/* <Button variant="gradient" size="sm" fullWidth>
         Sign In / Sign Up
-      </Button>
-    </a>
+      </Button> */}
+    </Link>
   ),
 };
 

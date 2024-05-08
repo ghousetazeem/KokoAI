@@ -14,7 +14,10 @@ import { FingerPrintIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { PageTitle, Footer } from "@/widgets/layout";
 import { FeatureCard, TeamCard } from "@/widgets/cards";
 import { featuresData, teamData, contactData } from "@/data";
-
+import 'bootstrap/dist/css/bootstrap.css';
+import PricingSection11 from "../widgets/cards/price";
+// Put any other imports below so that CSS from your
+// components takes precedence over default styles.
 export function Home() {
   const handleGetStarted = () => {
     const contactUs = document.getElementById("contactus")
@@ -153,13 +156,13 @@ export function Home() {
                   </Card>
                 </div>
               </div>
-              <div className="container mx-auto mb-32" id="plans">
-                <PageTitle heading="KOKO AI Plans" className="mt-32">
+              {/* <div className="container mx-auto mb-32" id="plans"> */}
+                {/* <PageTitle heading="KOKO AI Plans" className="mt-32">
                   According to the National Oceanic and Atmospheric Administration,
                   Ted, Scambos, NSIDClead scentist, puts the potentially record
                   maximum.
-                </PageTitle>
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                </PageTitle> */}
+                {/* <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {featuresData.map(({ color, title, icon, description }) => (
                     <FeatureCard
                       key={title}
@@ -171,10 +174,11 @@ export function Home() {
                       description={description}
                     />
                   ))}
-                </div>
+                </div> */}
 
-              </div>
+              {/* </div> */}
             </section>
+            <PricingSection11/>
           </div>
           <div id="contactus">
             <PageTitle section="Contact Us" heading="Want to work with us?" >
@@ -211,6 +215,7 @@ export function Home() {
           </form>
         </div>
       </section>
+     
       <div className="bg-white">
         <Footer />
       </div>
