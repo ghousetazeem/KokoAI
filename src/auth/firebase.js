@@ -12,6 +12,16 @@ const firebaseConfig = {
     measurementId: "G-TKMBD1MGBY"
 };
 
+//habeebs
+// const firebaseConfig = {
+//     apiKey: "AIzaSyBTxBsY7BtJHaAENkNaDubgOcfP5gPkmQY",
+//     authDomain: "koko-ai-6766c.firebaseapp.com",
+//     projectId: "koko-ai-6766c",
+//     storageBucket: "koko-ai-6766c.appspot.com",
+//     messagingSenderId: "1032328726950",
+//     appId: "1:1032328726950:web:341f165c346dbd10b06767"
+//   };
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth();

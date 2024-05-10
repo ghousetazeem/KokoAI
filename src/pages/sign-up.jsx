@@ -5,7 +5,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import React, { useState } from "react";
 import { auth, db } from "../auth/firebase";
 import { setDoc, doc } from "firebase/firestore";
@@ -41,8 +41,10 @@ export function SignUp() {
   };
 
   function googleLogin() {
-    const provider = new GoogleAuthProvider();
-    signInWithRedirect(auth, provider)
+    // const auth = getAuth();
+     const provider = new GoogleAuthProvider();
+   
+    signInWithPopup(auth, provider)
       .then(async (result) => {
         console.log(result);
         const user = result.user;
